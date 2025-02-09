@@ -1,7 +1,7 @@
 ################################################################################
 # MIT License
 #
-# Copyright (c) 2017 Smartfox Data Solutions, Inc.
+# Copyright (c) 2025 Smartfox Data Solutions, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ comp: work
  +incdir+$(UVM_HOME)/src \
  $(UVM_HOME)/src/uvm.sv \
  +incdir+../sv+../tb \
- ../tb/starter_tb_top.sv \
+ ../tb/starter_top.sv \
  +define+UVM_REPORT_DISABLE_FILE_LINE \
  -l vlog.log \
  $(COPTS)
@@ -55,7 +55,8 @@ run:
 	vsim \
  -sv_lib $(UVM_HOME)/lib/uvm_dpi \
  -c -do "log -r /*; run -all; q" -l vsim.log -f vlog.tops \
- +UVM_TESTNAME=starter_test \
+ +UVM_TESTNAME=starter_idle_cycles_test \
+ +SEQ=starter_no_activity_seq \
  $(ROPTS)
 
 dbg:

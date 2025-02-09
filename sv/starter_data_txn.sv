@@ -2,7 +2,7 @@
 //
 // MIT License
 //
-// Copyright (c) 2017 Smartfox Data Solutions Inc.
+// Copyright (c) 2025 Smartfox Data Solutions Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+// The component extended from uvm_sequence_item is used to represent a transaction. 
+// In our example, the only relevant field is the 8-bit data signal.
 
-class starter_sqr extends uvm_sequencer #(starter_txn);
-   int id;
+class starter_data_txn extends uvm_sequence_item;  
+  rand bit [7:0] data;
    
-   `uvm_component_utils_begin(starter_sqr)
-      `uvm_field_int(id, UVM_DEFAULT)
-   `uvm_component_utils_end
+  `uvm_object_utils_begin(starter_data_txn)
+  	`uvm_field_int (data, UVM_DEFAULT)
+  `uvm_object_utils_end
 
-   function new (string name, uvm_component parent);
-      super.new(name, parent);
-   endfunction // new
+  function new (string name = "starter_data_txn");
+	super.new(name);
+  endfunction
 
-endclass // starter_sqr
+  function string convert2string();
+    return $sformatf("data='h%2h", data);
+  endfunction
+endclass
