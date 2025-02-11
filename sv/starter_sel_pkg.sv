@@ -2,7 +2,7 @@
 //
 // MIT License
 //
-// Copyright (c) 2017 Smartfox Data Solutions Inc.
+// Copyright (c) 2025 Smartfox Data Solutions Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,40 +24,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-`include "starter_tb.sv"
+// This is the package definition for the components for driving and monitoring the starter_sel_if interface.
 
-class starter_test extends uvm_test;
-   
-   `uvm_component_utils(starter_test)
+`include "starter_sel_if.sv"
 
-   starter_tb tb;
-
-   function new (string name = "starter_test",
-		 uvm_component parent=null);
-      super.new(name, parent);
-   endfunction // new
-
-   virtual function void build_phase (uvm_phase phase);
-      super.build_phase(phase);
-      tb = starter_tb::type_id::create("tb", this);
-   endfunction // build_phase
-
-   task run_phase (uvm_phase phase);
-      starter_base_seq seq;
-      string list_of_sequences[$];
-      uvm_cmdline_processor clp;
-
-      phase.raise_objection(this);
-      clp = uvm_cmdline_processor::get_inst();
-      if (clp.get_arg_values("+SEQ=", list_of_sequences) == 0) begin
-	 `uvm_fatal("RUNPHASE", "no sequence specified")
-      end
-      foreach (list_of_sequences[n]) begin
-	 $cast(seq, factory.create_object_by_name(list_of_sequences[n]));
-	 seq.start(tb.env_in.agt.sqr);
-      end
-      phase.drop_objection(this);
-      phase.phase_done.set_drain_time(this, 100);
-   endtask // run_phase  
-   
-endclass // starter_test
+package starter_sel_pkg;
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+`include "starter_sel_txn.sv"
+`include "starter_sel_sqr.sv"
+`include "starter_sel_drv.sv"
+`include "starter_sel_mon.sv"
+`include "starter_sel_agt.sv"
+`include "starter_sel_seq_lib.sv"
+endpackage

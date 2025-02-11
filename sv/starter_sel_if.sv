@@ -2,7 +2,7 @@
 //
 // MIT License
 //
-// Copyright (c) 2017 Smartfox Data Solutions Inc.
+// Copyright (c) 2025 Smartfox Data Solutions Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-`include "starter_if.sv"
+// This is the definition of the starter select interface which is used by testbench components to drive and monitor the DUT select port. 
 
-package starter_pkg;
-
-   import uvm_pkg::*;
-
-`include "uvm_macros.svh"
-
-`include "starter_txn.sv"
-`include "starter_sqr.sv"
-`include "starter_drv.sv"
-`include "starter_mon.sv"
-`include "starter_agt.sv"
-`include "starter_env.sv"
-`include "starter_seq_lib.sv"
-
-endpackage // starter_pkg
-
+interface starter_sel_if;
+  logic clk;
+  logic rst;
+  logic sel;
+endinterface

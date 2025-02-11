@@ -2,7 +2,7 @@
 //
 // MIT License
 //
-// Copyright (c) 2017 Smartfox Data Solutions Inc.
+// Copyright (c) 2025 Smartfox Data Solutions Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,22 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-interface starter_if;
-   logic clk;
-   logic rst;
-   logic [7:0] data;
-   logic valid;
-endinterface // starter_if
+// Testbench components (drivers, monitors, environment, etc) typically have configurable features.
+// This class encapsulates configuration variables for starter_drv.
+// We use starter_data_cfg to illustrate setting configurations using uvm_config_db.
+// In our example, the starter_drv can be configured to insert idle cycles
+//   at the start of a transaction. By default, this feature is disabled.
+
+class starter_data_cfg extends uvm_object;
+  `uvm_object_utils(starter_data_cfg)
+  
+  bit idle_cycles_on = 0;
+  
+  function new (string name = "starter_data_cfg");
+	super.new(name);
+  endfunction
+
+  function string convert2string();
+    return $sformatf("idle_cycles_on='b%b", idle_cycles_on);
+  endfunction
+endclass
